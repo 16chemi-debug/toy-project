@@ -79,7 +79,10 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: oklch(1 0 0);
+  /* 화면 배경은 종이를 올려두는 바닥, 카드는 쓰는 종이다. 둘 다 순백이면 카드가
+     뜨지 않아 테두리에만 기댄다. 그리고 순백 화면은 고령자에게 눈부심을 준다.
+     크림색 대신 primary와 같은 계열의 아주 옅은 회색을 쓴다. */
+  --background: oklch(0.974 0.006 165);
   --foreground: oklch(0.145 0 0);
 }
 
@@ -117,6 +120,37 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* 초록은 이 화면에서 할 일, 파랑은 다른 화면으로 가는 길. 색으로 역할을 가른다. */
+:root {
+  --navigate: oklch(0.48 0.13 252);
+  --navigate-foreground: oklch(0.985 0 0);
+}
+
+.dark {
+  --navigate: oklch(0.58 0.14 252);
+  --navigate-foreground: oklch(0.145 0 0);
+}
+
+/* 추이 그래프의 색. 프로젝트의 dark chart token이 light와 값이 같아서
+   어두운 배경에서는 같은 램프의 밝은 쪽을 써야 선이 묻히지 않는다. */
+:root {
+  --trend-strong: var(--chart-5);
+  --trend-daily: var(--chart-3);
+  --trend-bar: var(--chart-4);
+  --trend-band: var(--chart-3);
+  --trend-band-opacity: 0.18;
+  --trend-normal-opacity: 0.07;
+}
+
+.dark {
+  --trend-strong: var(--chart-2);
+  --trend-daily: var(--chart-3);
+  --trend-bar: var(--chart-3);
+  --trend-band: var(--chart-2);
+  --trend-band-opacity: 0.15;
+  --trend-normal-opacity: 0.1;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -126,5 +160,11 @@
   }
   html {
     @apply font-sans;
+  }
+  /* 이 앱은 결국 숫자를 읽는 앱이다. 자릿수가 바뀌어도 숫자가 흔들리지 않게 한다. */
+  input[type="number"],
+  dd,
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
